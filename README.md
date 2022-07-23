@@ -1,4 +1,4 @@
-## text-adventure
+## Alone Against the Dark
 ![Twitter Follow](https://img.shields.io/twitter/follow/nlewis84?style=social)
 
 text-adventure is an JavaScript game that implements the story Alone Against the Dark by Matthew J. Costello.
