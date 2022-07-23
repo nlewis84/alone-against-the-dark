@@ -119,33 +119,49 @@ function TheGame() {
         Current Hour: {currentHour === 0 ? 'Midnight' : currentHour || ''}
       </Typography>
       {currentLocation.type === 'LocationTable' ? null : (
-        <Typography component="p" gutterBottom>
-          {currentLocation.paragraph}
-        </Typography>
+        <>
+          <Typography variant="h3" component="h3" gutterBottom>
+            {'Current Location'}
+          </Typography>
+          <Typography component="p" gutterBottom>
+            {currentLocation.paragraph}
+          </Typography>
+        </>
       )}
       {currentLocation.type === 'LocationTable' ? (
-        <Grid container spacing={3}>
-          {currentLocation.locations.map((item, indexOfLocation) => (
-            <Grid item xs={12} sm={6} md={4} key={indexOfLocation}>
-              {item.goTo.map((itemTwo, iTwo) => (
-                <Button
-                  key={iTwo}
-                  variant="contained"
-                  color="primary"
-                  onClick={handleClick}
-                  id={indexOfLocation}>
-                  {itemTwo.text}
-                </Button>
-              ))}
-            </Grid>
-          ))}
-        </Grid>
+        <>
+          <Typography variant="h3" component="h3" gutterBottom>
+            {currentLocation.locationTableName + ' Locations'}
+          </Typography>
+          <Grid container spacing={3}>
+            {currentLocation.locations.map((item, indexOfLocation) => (
+              <Grid item xs={12} sm={6} md={4} key={indexOfLocation}>
+                {item.goTo.map((itemTwo, iTwo) => (
+                  <Button
+                    key={iTwo}
+                    variant="contained"
+                    color="primary"
+                    onClick={handleClick}
+                    id={indexOfLocation}>
+                    {itemTwo.text}
+                  </Button>
+                ))}
+              </Grid>
+            ))}
+          </Grid>
+        </>
       ) : (
-        currentLocation.goTo.map((option, index) => (
-          <Button key={index} variant="contained" id={index} onClick={handleClick}>
-            {option.text}
-          </Button>
-        ))
+        <>
+          <Grid container spacing={3}>
+            {currentLocation.goTo.map((option, index) => (
+              <Grid item xs={12} sm={6} md={4} key={index}>
+                <Button key={index} variant="contained" id={index} onClick={handleClick}>
+                  {option.text}
+                </Button>
+              </Grid>
+            ))}
+          </Grid>
+        </>
       )}
     </Container>
   );
