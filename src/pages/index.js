@@ -1,25 +1,29 @@
-/* eslint-disable react/no-array-index-key */
-import {
-  Button,
-  Container,
-  Grid,
-  Typography,
-} from '@mui/material';
+/**
+ * /* eslint-disable react/no-array-index-key
+ *
+ * @format
+ */
+
+import { Button, Container, Grid, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 
 import Characters from '../characters';
 import Entries from '../entries';
 
 function TheGame() {
-  const [currentCharacter, setCurrentCharacter] = useState(Characters.Grunewald);
+  const [currentCharacter] = useState(Characters.Grunewald);
   const [currentDate, setCurrentDate] = useState(`${new Date(1931, 8, 2).toDateString()}`);
   const [currentHour, setCurrentHour] = useState(6);
   const [locationsVisited, setLocationsVisited] = useState([]);
-  const [currentLocationTable, setCurrentLocationTable] = useState("Arkham")
-  const [currentLocation, setCurrentLocation] = useState(Entries[13](currentCharacter, currentDate, currentLocationTable, locationsVisited))
+  const [currentLocationTable, setCurrentLocationTable] = useState('Arkham');
+  const [currentLocation, setCurrentLocation] = useState(
+    Entries[13](currentCharacter, currentDate, currentLocationTable, locationsVisited)
+  );
   const [dataIsLoaded, setDataIsLoaded] = useState(false);
 
-  useEffect(() => { setDataIsLoaded(true) }, []);
+  useEffect(() => {
+    setDataIsLoaded(true);
+  }, []);
 
   const advanceDays = (days) => {
     const date = new Date(currentDate);
@@ -28,7 +32,7 @@ function TheGame() {
 
     setCurrentDate(newDateString);
     setCurrentHour(6);
-  }
+  };
 
   const advanceHours = (hours) => {
     const newHour = currentHour + hours;
@@ -39,7 +43,7 @@ function TheGame() {
     } else {
       setCurrentHour(newHour);
     }
-  }
+  };
 
   const handleClick = (event) => {
     event.preventDefault();
@@ -54,8 +58,15 @@ function TheGame() {
       }
 
       setCurrentLocationTable(currentLocation.locationTableName);
-      setLocationsVisited(current => [...current, goTo.location])
-      setCurrentLocation(Entries[goTo.location](currentCharacter, currentDate, currentLocationTable, locationsVisited))
+      setLocationsVisited((current) => [...current, goTo.location]);
+      setCurrentLocation(
+        Entries[goTo.location](
+          currentCharacter,
+          currentDate,
+          currentLocationTable,
+          locationsVisited
+        )
+      );
     } else {
       let goTo = currentLocation.goTo[event.target.id];
 
@@ -65,15 +76,20 @@ function TheGame() {
         advanceDays(goTo.advance.amount);
       }
 
-      setLocationsVisited(current => [...current, goTo.location])
-      setCurrentLocation(Entries[goTo.location](currentCharacter, currentDate, currentLocationTable, locationsVisited));
+      setLocationsVisited((current) => [...current, goTo.location]);
+      setCurrentLocation(
+        Entries[goTo.location](
+          currentCharacter,
+          currentDate,
+          currentLocationTable,
+          locationsVisited
+        )
+      );
     }
-  }
+  };
 
   if (!dataIsLoaded) {
-    return (
-      <Container className="App" />
-    );
+    return <Container className="App" />;
   }
 
   return (
@@ -102,38 +118,36 @@ function TheGame() {
       <Typography component="p" gutterBottom>
         Current Hour: {currentHour === 0 ? 'Midnight' : currentHour || ''}
       </Typography>
-      {currentLocation.type === "LocationTable"
-        ? null
-        : (
-          <Typography component="p" gutterBottom>
-            {currentLocation.paragraph}
-          </Typography>
-        )
-      }
-      {
-        currentLocation.type === "LocationTable"
-          ? (
-            <Grid container spacing={3}>
-              {currentLocation.locations.map((item, indexOfLocation) => (
-                <Grid item xs={12} sm={6} md={4} key={indexOfLocation}>
-                  {item.goTo.map((itemTwo, iTwo) => (
-                    <Button key={iTwo} variant="contained" color="primary" onClick={handleClick} id={indexOfLocation} >
-                      {itemTwo.text}
-                    </Button>
-                  ))}
-                </Grid>
+      {currentLocation.type === 'LocationTable' ? null : (
+        <Typography component="p" gutterBottom>
+          {currentLocation.paragraph}
+        </Typography>
+      )}
+      {currentLocation.type === 'LocationTable' ? (
+        <Grid container spacing={3}>
+          {currentLocation.locations.map((item, indexOfLocation) => (
+            <Grid item xs={12} sm={6} md={4} key={indexOfLocation}>
+              {item.goTo.map((itemTwo, iTwo) => (
+                <Button
+                  key={iTwo}
+                  variant="contained"
+                  color="primary"
+                  onClick={handleClick}
+                  id={indexOfLocation}>
+                  {itemTwo.text}
+                </Button>
               ))}
             </Grid>
-          )
-          : (
-            currentLocation.goTo.map((option, index) => (
-              <Button key={index} variant="contained" id={index} onClick={handleClick}>
-                {option.text}
-              </Button>
-            )
-            ))
-      }
-    </Container >
+          ))}
+        </Grid>
+      ) : (
+        currentLocation.goTo.map((option, index) => (
+          <Button key={index} variant="contained" id={index} onClick={handleClick}>
+            {option.text}
+          </Button>
+        ))
+      )}
+    </Container>
   );
 }
 

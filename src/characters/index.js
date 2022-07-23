@@ -1,13 +1,15 @@
+/** @format */
+
 import rollDice from '../helpers/rollDice';
 
 const Characters = {
   Grunewald: {
-    name: "Louis Grunewald",
-    occupation: "Professor",
-    sex: "M",
+    name: 'Louis Grunewald',
+    occupation: 'Professor',
+    sex: 'M',
     age: 53,
-    nationality: "USA",
-    residence: "Arkham",
+    nationality: 'USA',
+    residence: 'Arkham',
     stats: {
       str: 14,
       dex: 12,
@@ -21,8 +23,8 @@ const Characters = {
       san: 55,
       edu: 19,
       know: 95,
-      schools: "U. Chicago",
-      degrees: "M.A., Ph. D.",
+      schools: 'U. Chicago',
+      degrees: 'M.A., Ph. D.',
       damageModifier: 0,
       magicPoints: 11,
       hitPoints: 10,
@@ -151,31 +153,31 @@ const Characters = {
     },
     miscellaneous: [
       {
-        relationship: "Friends with",
-        name: "Ernest Holt"
+        relationship: 'Friends with',
+        name: 'Ernest Holt'
       },
       {
-        relationship: "Instructed",
-        name: "Nora McShane"
+        relationship: 'Instructed',
+        name: 'Nora McShane'
       },
       {
-        relationship: "Instructed",
-        name: "Devon Wilson"
-      },
+        relationship: 'Instructed',
+        name: 'Devon Wilson'
+      }
     ],
     pointAllotment: {
       skillPoints: 355,
       bonusSkillPoints: 150
     },
-    money: 2200,
+    money: 2200
   },
   Holt: {
-    name: "Ernest Holt",
-    occupation: "Industrialist",
-    sex: "M",
+    name: 'Ernest Holt',
+    occupation: 'Industrialist',
+    sex: 'M',
     age: 62,
-    nationality: "USA",
-    residence: "New York City",
+    nationality: 'USA',
+    residence: 'New York City',
     stats: {
       str: 9,
       dex: 6,
@@ -189,8 +191,8 @@ const Characters = {
       san: 50,
       edu: 11,
       know: 55,
-      schools: "Rensselaer",
-      degrees: "B.S.",
+      schools: 'Rensselaer',
+      degrees: 'B.S.',
       damageModifier: () => rollDice(1, 4),
       magicPoints: 10,
       hitPoints: 12,
@@ -319,31 +321,31 @@ const Characters = {
     },
     miscellaneous: [
       {
-        relationship: "Friends with",
-        name: "Lousis Grunewald"
+        relationship: 'Friends with',
+        name: 'Lousis Grunewald'
       },
       {
-        relationship: "Friends with",
-        name: "Nora McShane"
+        relationship: 'Friends with',
+        name: 'Nora McShane'
       },
       {
-        relationship: "Commanded",
-        name: "Devon Wilson"
-      },
+        relationship: 'Commanded',
+        name: 'Devon Wilson'
+      }
     ],
     pointAllotment: {
       skillPoints: 255,
       bonusSkillPoints: 150
     },
-    money: 35000,
+    money: 35000
   },
   McShane: {
-    name: "Nora McShane",
-    occupation: "Reporter",
-    sex: "F",
+    name: 'Nora McShane',
+    occupation: 'Reporter',
+    sex: 'F',
     age: 23,
-    nationality: "USA",
-    residence: "New York City",
+    nationality: 'USA',
+    residence: 'New York City',
     stats: {
       str: 11,
       dex: 11,
@@ -357,8 +359,8 @@ const Characters = {
       san: 55,
       edu: 14,
       know: 70,
-      schools: "Miskatonic",
-      degrees: "None",
+      schools: 'Miskatonic',
+      degrees: 'None',
       damageModifier: 0,
       magicPoints: 11,
       hitPoints: 12,
@@ -487,31 +489,31 @@ const Characters = {
     },
     miscellaneous: [
       {
-        relationship: "Friends with",
-        name: "Ernest Holt"
+        relationship: 'Friends with',
+        name: 'Ernest Holt'
       },
       {
-        relationship: "Girlfriend of",
-        name: "Devon Wilson"
+        relationship: 'Girlfriend of',
+        name: 'Devon Wilson'
       },
       {
-        relationship: "Instructed by",
-        name: "Louis Grunewald"
-      },
+        relationship: 'Instructed by',
+        name: 'Louis Grunewald'
+      }
     ],
     pointAllotment: {
       skillPoints: 280,
       bonusSkillPoints: 150
     },
-    money: 700,
+    money: 700
   },
   Wilson: {
-    name: "Devon Wilson",
-    occupation: "US Navy - Lieutenant",
-    sex: "M",
+    name: 'Devon Wilson',
+    occupation: 'US Navy - Lieutenant',
+    sex: 'M',
     age: 28,
-    nationality: "USA",
-    residence: "Norfolk",
+    nationality: 'USA',
+    residence: 'Norfolk',
     stats: {
       str: 13,
       dex: 11,
@@ -525,8 +527,8 @@ const Characters = {
       san: 50,
       edu: 17,
       know: 85,
-      schools: "Miskatonic",
-      degrees: "None",
+      schools: 'Miskatonic',
+      degrees: 'None',
       damageModifier: () => rollDice(1, 4),
       magicPoints: 17,
       hitPoints: 13,
@@ -655,24 +657,24 @@ const Characters = {
     },
     miscellaneous: [
       {
-        relationship: "Decorated by",
-        name: "Ernest Holt"
+        relationship: 'Decorated by',
+        name: 'Ernest Holt'
       },
       {
-        relationship: "Boyfriend of",
-        name: "Nora McShane"
+        relationship: 'Boyfriend of',
+        name: 'Nora McShane'
       },
       {
-        relationship: "Instructed by",
-        name: "Louis Grunewald"
-      },
+        relationship: 'Instructed by',
+        name: 'Louis Grunewald'
+      }
     ],
     pointAllotment: {
       skillPoints: 320,
       bonusSkillPoints: 150
     },
-    money: 2500,
-  },
+    money: 2500
+  }
 };
 
 export default Characters;
