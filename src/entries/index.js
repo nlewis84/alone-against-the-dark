@@ -553,6 +553,31 @@ const Entries = {
     telephone: true,
     previous: ['Arkham']
   }),
+  23: () => ({
+    type: 'MultipleChoiceEntry',
+    locationName: null,
+    paragraph: `" 'Tis my boarding house, and I'll allow in whom I wish!" She slams the door.`,
+    goTo: [
+      {
+        text: 'Try to sneak in later tonight',
+        location: 90,
+        advance: {
+          amount: 'Night',
+          type: 'Hour'
+        }
+      },
+      {
+        text: 'You decide to escape',
+        location: 'Arkham',
+        advance: {
+          amount: 1,
+          type: 'Hour'
+        }
+      }
+    ],
+    telephone: false,
+    previous: [113]
+  }),
   38: (currentCharacter, currentDate, currentLocationTable) => ({
     type: 'SpecialActionEntry',
     locationName: 'Retail Store',

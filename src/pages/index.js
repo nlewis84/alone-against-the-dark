@@ -35,13 +35,22 @@ function TheGame() {
   };
 
   const advanceHours = (hours) => {
-    const newHour = currentHour + hours;
+    if (typeof hours === 'number') {
+      const newHour = currentHour + hours;
 
-    if (newHour > 23) {
-      advanceDays(1);
-      setCurrentHour(newHour - 24);
+      if (newHour > 23) {
+        advanceDays(1);
+        setCurrentHour(newHour - 24);
+      } else {
+        setCurrentHour(newHour);
+      }
     } else {
-      setCurrentHour(newHour);
+      console.log(currentHour);
+      if (currentHour >= 22) {
+        advanceHours(1);
+      } else {
+        setCurrentHour(23);
+      }
     }
   };
 
