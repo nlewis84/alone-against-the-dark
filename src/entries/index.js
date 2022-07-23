@@ -149,15 +149,19 @@ TelephoneEntry:
 // TODO: Remove the Arkham location object from this object
 
 const Entries = {
-  1: {
+  1: (
+    currentCharacter, currentDate, currentLocationTable, locationsVisited
+  ) => ({
     type: "PreviousLocationEntry",
     locationName: null,
     paragraph: `He's lying.`,
     goTo: "Previous",
     telephone: false,
     previous: [166, 177],
-  },
-  2: {
+  }),
+  2: (
+    currentCharacter, currentDate, currentLocationTable, locationsVisited
+  ) => ({
     type: "MultipleChoiceEntry",
     locationName: null,
     paragraph: `The room is silent. You feel about for the light switch. You find it, and gently press it on. Oops! It's Mrs. Harding's room! What a mistake! You see her turn and rise from the bedclothes, her frightened face screaming. As the scream pierces your ears, you hear the boarders begin to stir. You can stay here or escape to another Arkham location.`,
@@ -181,8 +185,10 @@ const Entries = {
     ],
     telephone: false,
     previous: [52],
-  },
-  3: (currentCharacter, currentDate, locationsVisited) => ({
+  }),
+  3: (
+    currentCharacter, currentDate, currentLocationTable, locationsVisited
+  ) => ({
     type: "SpecialActionEntry",
     locationName: "Arkham First National Bank",
     paragraph: `Deposits and withdrawals are possible between 9 - 3, M·F. If you're Prof. Grunewald, your account is here and you can withdraw up to the amount noted on the investigator sheet, or the current balance as entered in your journal. From here you can go to any Arkham location.`,
@@ -209,15 +215,19 @@ const Entries = {
     telephone: false,
     previous: ["Arkham"],
   }),
-  4: {
+  4: (
+    currentCharacter, currentDate, currentLocationTable, locationsVisited
+  ) => ({
     type: "PreviousLocationEntry",
     locationName: null,
     paragraph: `He's lying. And he does not possess the implied skill.`,
     goTo: "Previous",
     telephone: false,
     previous: [76, 166, 177],
-  },
-  5: {
+  }),
+  5: (
+    currentCharacter, currentDate, currentLocationTable, locationsVisited
+  ) => ({
     type: "SingleChoiceEntry",
     locationName: null,
     paragraph: `You noticed flecks or flakes of dry, transparent material. It looks like skin. Whoever was here was peeling like a water-soaked ceiling! Baffled, you find no answer to this puzzle. No more evidence can be found here.`,
@@ -233,8 +243,10 @@ const Entries = {
     ],
     telephone: false,
     previous: [165],
-  },
-  6: {
+  }),
+  6: (
+    currentCharacter, currentDate, currentLocationTable, locationsVisited
+  ) => ({
     locationName: null,
     paragraph: `There is a difference between using a phrase book and speaking a language. They speak English at the Athens Bureau of Investigation, you suppose.`,
     goTo: [
@@ -249,8 +261,10 @@ const Entries = {
     ],
     telephone: false,
     previous: [1],
-  },
-  7: {
+  }),
+  7: (
+    currentCharacter, currentDate, currentLocationTable, locationsVisited
+  ) => ({
     type: "SkillCheckEntry",
     locationName: null,
     paragraph: `The window opens smoothly and you enter. You try to move as quietly as possible.`,
@@ -290,8 +304,10 @@ const Entries = {
     goTo: [],
     telephone: false,
     previous: [28, 90],
-  },
-  8: {
+  }),
+  8: (
+    currentCharacter, currentDate, currentLocationTable, locationsVisited
+  ) => ({
     type: "SingleChoiceEntry",
     locationName: null,
     paragraph: `He takes your refusal without interest. "Very well, sir. I shall return later." He leaves and you stare at the walls of your silent room.`,
@@ -305,8 +321,10 @@ const Entries = {
     },
     telephone: false,
     previous: [167],
-  },
-  9: {
+  }),
+  9: (
+    currentCharacter, currentDate, currentLocationTable, locationsVisited
+  ) => ({
     type: "SkillCheckEntry",
     locationName: null,
     paragraph: `The man is an Egyptian. His posture seems threatening.`,
@@ -338,8 +356,10 @@ const Entries = {
     goTo: [],
     telephone: false,
     previous: [47],
-  },
-  10: {
+  }),
+  10: (
+    currentCharacter, currentDate, currentLocationTable, locationsVisited
+  ) => ({
     type: "CombatEntry",
     locationName: null,
     paragraph: `Attempt a Luck roll.`,
@@ -373,8 +393,10 @@ const Entries = {
     goTo: [],
     telephone: false,
     previous: [9, 91],
-  },
-  11: {
+  }),
+  11: (
+    currentCharacter, currentDate, currentLocationTable, locationsVisited
+  ) => ({
     type: "SingleChoiceEntry",
     locationName: null,
     paragraph: `This room is actually just connectd to the adjacent room.`,
@@ -390,8 +412,10 @@ const Entries = {
     ],
     telephone: false,
     previous: [52],
-  },
-  12: {
+  }),
+  12: (
+    currentCharacter, currentDate, currentLocationTable, locationsVisited
+  ) => ({
     type: "SkillCheckEntry",
     locationName: null,
     paragraph: `The food tasted all right at the time, but now your stomach is churning.Food poisoning! You're really sick!`,
@@ -401,7 +425,7 @@ const Entries = {
       passGoTo: [
         {
           text: "It's time to head somewhere else",
-          location: "CurrentLocationTable",
+          location: currentLocationTable[currentLocationTable.length - 1],
           advance: {
             amount: 1,
             type: "Hour"
@@ -412,7 +436,7 @@ const Entries = {
       failGoTo: [
         {
           text: "You should head somewhere else",
-          location: "CurrentLocationTable",
+          location: currentLocationTable[currentLocationTable.length - 1],
           advance: {
             amount: 4,
             type: "Hour"
@@ -423,8 +447,11 @@ const Entries = {
     goTo: [],
     telephone: false,
     previous: [586],
-  },
-  13: (currentCharacter, currentDate, locationsVisited) => ({
+  }),
+  13: (
+    currentCharacter, currentDate, currentLocationTable, locationsVisited
+  ) => ({
+    type: "SingleChoiceEntry",
     locationName: null,
     paragraph: `For you, Professor Louis Grunewald, this first day of September, 1931, has been tiring and uncomfortable. Light mist has covered Arkham for most of the day. You held two uninspired undergraduate classes at Miskatonic University. You also met with the new chairman of the Literature Department, a giddy Technocrat. You survey your desk and see that a stack of papers to grade has already formed. You're enjoying your second pipe of the evening when the doorbell rings. To your surprise, it's a telegraphic messenger. 
     
@@ -456,7 +483,9 @@ const Entries = {
     telephone: false,
     previous: [1],
   }),
-  14: {
+  14: (
+    currentCharacter, currentDate, currentLocationTable, locationsVisited
+  ) => ({
     type: "SkillCheckEntry",
     locationName: null,
     paragraph: `You crouched in the gloomy shadows. Soon you hear slow, shuffling footsteps from many directions. Do you wish you'd run instead? Somehow you count yourself glad that you can't make out the faces of the approaching figures- figures which move as though alive, and yet remind you of the dead! Now you're sure they see you. You begin to panic.`,
@@ -497,8 +526,10 @@ const Entries = {
     ],
     telephone: false,
     previous: [194],
-  },
-  15: {
+  }),
+  15: (
+    currentCharacter, currentDate, currentLocationTable, locationsVisited
+  ) => ({
     type: "SingleChoiceEntry",
     locationName: null,
     paragraph: `Nobody goes near the European driver. Perhaps there's something odd about that. The old fellow looks shaky, but serene. The young driver looks friendly, but perhaps overly brash.`,
@@ -514,8 +545,10 @@ const Entries = {
     ],
     telephone: false,
     previous: [58],
-  },
-  16: {
+  }),
+  16: (
+    currentCharacter, currentDate, currentLocationTable, locationsVisited
+  ) => ({
     type: "TelephoneEntry",
     locationName: "Arkham Depot",
     telephoneParagraph: `Trains for Boston leave at 9am, noon, and 5pm The trip takes an hour and costs $125.`,
@@ -546,8 +579,10 @@ const Entries = {
     ],
     telephone: true,
     previous: ["Arkham"],
-  },
-  38: {
+  }),
+  38: (
+    currentCharacter, currentDate, currentLocationTable, locationsVisited
+  ) => ({
     type: "SpecialActionEntry",
     locationName: "Retail Store",
     paragraph: `This retailer accepts currency from any country. You can buy any item or weapon listed.`,
@@ -560,7 +595,7 @@ const Entries = {
     goTo: [
       {
         text: "You decide to head somewhere else",
-        location: "CurrentLocationTable",
+        location: currentLocationTable[currentLocationTable.length - 1],
         advance: {
           amount: 1,
           type: "Hour"
@@ -569,40 +604,18 @@ const Entries = {
     ],
     telephone: false,
     previous: ["Arkham", "New York", "Athens", "Alexandria", "Bremen"],
-  },
-
-
-
-
-
-
-
-
-  102: (currentCharacter, currentDate, locationsVisited) => currentDate > new Date(1931, 8, 1) && locationsVisited.includes(102)
-    ? {
-      locationName: null,
-      paragraph: "It is after September 8th.",
-      goTo: [
-        {
-          text: "Something seems amiss",
-          location: 147,
-          advance: {
-            amount: 1,
-            type: "Hour"
-          }
-        },
-      ],
-      telephone: false,
-      previous: [],
-    }
-    : currentCharacter.name !== "Louis Grunewald"
+  }),
+  102: (
+    currentCharacter, currentDate, currentLocationTable, locationsVisited
+  ) => new Date(currentDate) > new Date(1931, 9, 1) && locationsVisited.includes(102)
       ? {
+        type: "SingleChoiceEntry",
         locationName: null,
-        paragraph: "You are not Louis Grunewald.",
+        paragraph: "It is after September 8th.",
         goTo: [
           {
             text: "Something seems amiss",
-            location: 120,
+            location: 147,
             advance: {
               amount: 1,
               type: "Hour"
@@ -612,23 +625,45 @@ const Entries = {
         telephone: false,
         previous: [],
       }
-      : {
-        locationName: null,
-        paragraph: "You rest and have a repast. You may travel to any Arkham location.",
-        goTo: [
-          {
-            text: "Go to any Arkham location",
-            location: "Arkham",
-            advance: {
-              amount: 1,
-              type: "Hour"
-            }
-          },
-        ],
-        telephone: false,
-        previous: [],
-      },
-  120: {
+      : currentCharacter.name !== "Louis Grunewald"
+        ? {
+          type: "SingleChoiceEntry",
+          locationName: null,
+          paragraph: "You are not Louis Grunewald.",
+          goTo: [
+            {
+              text: "Something seems amiss",
+              location: 120,
+              advance: {
+                amount: 1,
+                type: "Hour"
+              }
+            },
+          ],
+          telephone: false,
+          previous: [],
+        }
+        : {
+          type: "SingleChoiceEntry",
+          locationName: null,
+          paragraph: "You rest and have a repast. You may travel to any Arkham location.",
+          goTo: [
+            {
+              text: "Go to any Arkham location",
+              location: "Arkham",
+              advance: {
+                amount: 1,
+                type: "Hour"
+              }
+            },
+          ],
+          telephone: false,
+          previous: [],
+        },
+  120: (
+    currentCharacter, currentDate, currentLocationTable, locationsVisited
+  ) => ({
+    type: "MultipleChoiceEntry",
     locationName: null,
     paragraph: " The back door is ajar. You enter the small house and a strange, repellent odor assaults your nostrils. Then you hear a car pull away from in front of the house. You look out, but see only a long black sedan disappear around the corner. Everything looks okay until you enter Grunewald's office. It has been totally ransacked. Books and papers are everywhere. You can go to any Arkham location, or you can make a search.",
     goTo: [
@@ -651,14 +686,17 @@ const Entries = {
     ],
     telephone: false,
     previous: [],
-  },
-  147: {
+  }),
+  147: (
+    currentCharacter, currentDate, currentLocationTable, locationsVisited
+  ) => ({
+    type: "SingleChoiceEntry",
     locationName: null,
     paragraph: "Grunewald's room looks as though someone departed hastily.",
     goTo: [
       {
         text: "Nothing else to see here",
-        location: 102,
+        location: "Arkham",
         advance: {
           amount: 1,
           type: "Hour"
@@ -667,8 +705,10 @@ const Entries = {
     ],
     telephone: false,
     previous: [102],
-  },
-  165: {
+  }),
+  165: (
+    currentCharacter, currentDate, currentLocationTable, locationsVisited
+  ) => ({
     type: "SkillCheckEntry",
     locationName: null,
     paragraph: "Except for detritus normal to an academic life , you find nothing. For another hour of searching and a successful Spot Hidden ,go to - 5- . Or go to any Afkham localion",
@@ -708,9 +748,12 @@ const Entries = {
     goTo: [],
     telephone: false,
     previous: [120],
-  },
-  "Arkham": (currentCharacter, currentDate, locationsVisited) => ({
+  }),
+  "Arkham": (
+    currentCharacter, currentDate, currentLocationTable, locationsVisited
+  ) => ({
     type: "LocationTable",
+    locationTableName: "Arkham",
     locations: [
       {
         open: {
