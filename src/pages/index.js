@@ -12,22 +12,53 @@ import Entries from '../entries';
 
 function TheGame() {
   const [currentCharacter, setCurrentCharacter] = useState(Characters.Grunewald);
-  const [currentDate, setCurrentDate] = useState(`${new Date(1931, 9, 10).toDateString()}`);
+  const [currentDate, setCurrentDate] = useState(`${new Date(1931, 8, 2).toDateString()}`);
+  const [currentHour, setCurrentHour] = useState(6);
   const [locationsVisited, setLocationsVisited] = useState([]);
-  const [currentLocationTable, setCurrentLocationTable] = useState([])
+  const [currentLocationTable, setCurrentLocationTable] = useState("Arkham")
   const [currentLocation, setCurrentLocation] = useState(Entries[13](currentCharacter, currentDate, currentLocationTable, locationsVisited))
   const [dataIsLoaded, setDataIsLoaded] = useState(false);
 
   useEffect(() => { setDataIsLoaded(true) }, []);
 
+  const nextDay = () => {
+    const date = new Date(currentDate);
+    const newDate = date.setDate(date.getDate() + 1);
+    const newDateString = `${new Date(newDate).toDateString()}`;
+
+    setCurrentDate(newDateString);
+    setCurrentHour(6);
+  }
+
+  const nextHour = () => {
+    if (currentHour < 23) {
+      setCurrentHour(currentHour + 1)
+    } else {
+      setCurrentHour(0);
+      nextDay();
+    }
+  }
+
   const handleClick = (event) => {
     event.preventDefault();
 
     if (currentLocation.type === 'LocationTable') {
+      if (currentLocation.locations[event.target.id].goTo[0].advance.type === 'Hour') {
+        nextHour();
+      } else if (currentLocation.locations[event.target.id].goTo[0].advance.type === 'Day') {
+        nextDay();
+      }
+
       setCurrentLocationTable(currentLocation.locationTableName);
       setLocationsVisited(current => [...current, currentLocation.locations[event.target.id].goTo[0].location])
       setCurrentLocation(Entries[currentLocation.locations[event.target.id].goTo[0].location](currentCharacter, currentDate, currentLocationTable, locationsVisited))
     } else {
+      if (currentLocation.goTo[event.target.id].advance.type === 'Hour') {
+        nextHour();
+      } else if (currentLocation.goTo[event.target.id].advance.type === 'Day') {
+        nextDay();
+      }
+
       setLocationsVisited(current => [...current, currentLocation.goTo[event.target.id].location])
       setCurrentLocation(Entries[currentLocation.goTo[event.target.id].location](currentCharacter, currentDate, currentLocationTable, locationsVisited));
     }
@@ -61,6 +92,9 @@ function TheGame() {
       </Typography>
       <Typography component="p" gutterBottom>
         Current Date: {currentDate || ''}
+      </Typography>
+      <Typography component="p" gutterBottom>
+        Current Hour: {currentHour === 0 ? 'Midnight' : currentHour || ''}
       </Typography>
       {currentLocation.type === "LocationTable"
         ? null

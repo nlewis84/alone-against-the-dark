@@ -595,7 +595,7 @@ const Entries = {
     goTo: [
       {
         text: "You decide to head somewhere else",
-        location: currentLocationTable[currentLocationTable.length - 1],
+        location: currentLocationTable,
         advance: {
           amount: 1,
           type: "Hour"
@@ -607,7 +607,7 @@ const Entries = {
   }),
   102: (
     currentCharacter, currentDate, currentLocationTable, locationsVisited
-  ) => new Date(currentDate) > new Date(1931, 9, 1) && locationsVisited.includes(102)
+  ) => new Date(currentDate) > new Date(1931, 8, 8) && locationsVisited.includes(102)
       ? {
         type: "SingleChoiceEntry",
         locationName: null,
@@ -757,7 +757,7 @@ const Entries = {
     locations: [
       {
         open: {
-          days: [2, 3, 4, 5, 6],
+          days: [1, 2, 3, 4, 5],
           hours: [9, 10, 11, 12, 13, 14, 15],
         },
         goTo: [
@@ -774,7 +774,7 @@ const Entries = {
       },
       {
         open: {
-          days: [1, 2, 3, 4, 5, 6, 7],
+          days: [0, 1, 2, 3, 4, 5, 6],
           hours: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
         },
         goTo: [
@@ -791,7 +791,7 @@ const Entries = {
       },
       {
         open: {
-          days: [1, 2, 3, 4, 5, 6, 7],
+          days: [0, 1, 2, 3, 4, 5, 6],
           hours: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
         },
         goTo: [
@@ -808,7 +808,7 @@ const Entries = {
       },
       {
         open: {
-          days: [2, 3, 4, 5, 6, 7],
+          days: [1, 2, 3, 4, 5, 6],
           hours: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
         },
         goTo: [
@@ -825,7 +825,7 @@ const Entries = {
       },
       {
         open: {
-          days: [2, 3, 4, 5, 6],
+          days: [1, 2, 3, 4, 5],
           hours: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
         },
         goTo: [
@@ -842,7 +842,7 @@ const Entries = {
       },
       {
         open: {
-          days: [2, 3, 4, 5, 6],
+          days: [1, 2, 3, 4, 5],
           hours: [9, 10, 11, 12, 13, 14, 15, 16],
         },
         goTo: [
@@ -859,7 +859,7 @@ const Entries = {
       },
       {
         open: {
-          days: [2, 3, 4, 5, 6],
+          days: [1, 2, 3, 4, 5],
           hours: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
         },
         goTo: [
@@ -876,7 +876,7 @@ const Entries = {
       },
       {
         open: {
-          days: [2, 3, 4, 5, 6],
+          days: [1, 2, 3, 4, 5],
           hours: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
         },
         goTo: [
@@ -893,7 +893,7 @@ const Entries = {
       },
       {
         open: {
-          days: [2, 3, 4, 5, 6],
+          days: [1, 2, 3, 4, 5],
           hours: [9, 10, 11, 12, 13, 14, 15],
         },
         goTo: [
