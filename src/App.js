@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import * as React from 'react';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
+import TheGame from './pages';
 
-function App() {
+function Copyright() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Typography variant="body2" color="text.secondary" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="https://mui.com/">
+        Nathan Lewis
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <Container>
+      <Box>
+        <Typography sx={{ textAlign: 'center' }} variant="h1" component="h1" gutterBottom>
+          Alone Against The Dark
+        </Typography>
+        <TheGame />
+        <Copyright />
+      </Box>
+    </Container>
+  );
+}
