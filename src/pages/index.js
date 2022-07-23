@@ -21,21 +21,23 @@ function TheGame() {
 
   useEffect(() => { setDataIsLoaded(true) }, []);
 
-  const nextDay = () => {
+  const advanceDays = (days) => {
     const date = new Date(currentDate);
-    const newDate = date.setDate(date.getDate() + 1);
+    const newDate = date.setDate(date.getDate() + days);
     const newDateString = `${new Date(newDate).toDateString()}`;
 
     setCurrentDate(newDateString);
     setCurrentHour(6);
   }
 
-  const nextHour = () => {
-    if (currentHour < 23) {
-      setCurrentHour(currentHour + 1)
+  const advanceHours = (hours) => {
+    const newHour = currentHour + hours;
+
+    if (newHour > 23) {
+      advanceDays(1);
+      setCurrentHour(newHour - 24);
     } else {
-      setCurrentHour(0);
-      nextDay();
+      setCurrentHour(newHour);
     }
   }
 
@@ -43,24 +45,28 @@ function TheGame() {
     event.preventDefault();
 
     if (currentLocation.type === 'LocationTable') {
-      if (currentLocation.locations[event.target.id].goTo[0].advance.type === 'Hour') {
-        nextHour();
-      } else if (currentLocation.locations[event.target.id].goTo[0].advance.type === 'Day') {
-        nextDay();
+      let goTo = currentLocation.locations[event.target.id].goTo[0];
+
+      if (goTo.advance.type === 'Hour') {
+        advanceHours(goTo.advance.amount);
+      } else if (goTo.advance.type === 'Day') {
+        advanceDays(goTo.advance.amount);
       }
 
       setCurrentLocationTable(currentLocation.locationTableName);
-      setLocationsVisited(current => [...current, currentLocation.locations[event.target.id].goTo[0].location])
-      setCurrentLocation(Entries[currentLocation.locations[event.target.id].goTo[0].location](currentCharacter, currentDate, currentLocationTable, locationsVisited))
+      setLocationsVisited(current => [...current, goTo.location])
+      setCurrentLocation(Entries[goTo.location](currentCharacter, currentDate, currentLocationTable, locationsVisited))
     } else {
-      if (currentLocation.goTo[event.target.id].advance.type === 'Hour') {
-        nextHour();
-      } else if (currentLocation.goTo[event.target.id].advance.type === 'Day') {
-        nextDay();
+      let goTo = currentLocation.goTo[event.target.id];
+
+      if (goTo.advance.type === 'Hour') {
+        advanceHours(goTo.advance.amount);
+      } else if (goTo.advance.type === 'Day') {
+        advanceDays(goTo.advance.amount);
       }
 
-      setLocationsVisited(current => [...current, currentLocation.goTo[event.target.id].location])
-      setCurrentLocation(Entries[currentLocation.goTo[event.target.id].location](currentCharacter, currentDate, currentLocationTable, locationsVisited));
+      setLocationsVisited(current => [...current, goTo.location])
+      setCurrentLocation(Entries[goTo.location](currentCharacter, currentDate, currentLocationTable, locationsVisited));
     }
   }
 
