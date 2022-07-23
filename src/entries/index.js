@@ -41,7 +41,7 @@
  *       }
  *     },
  *     {
- *       text: "You decide to escape",
+ *       text: "Go to any Arkham location",
  *       location: "Arkham",
  *       advance: {
  *         amount: 1,
@@ -174,7 +174,7 @@ const Entries = {
         }
       },
       {
-        text: 'You decide to escape',
+        text: 'Go to any Arkham location',
         location: 'Arkham',
         advance: {
           amount: 1,
@@ -256,11 +256,11 @@ const Entries = {
   7: () => ({
     type: 'SkillCheckEntry',
     locationName: null,
-    paragraph: `The window opens smoothly and you enter. You try to move as quietly as possible.`,
+    paragraph: `You are in Harding House. You try to move as quietly as possible.`,
     skillCheck: {
       skill: 'Sneak',
       passText:
-        "You realize that you have no idea where Gliere's room is. You go upstairs. All the doors are close; none have names on them.",
+        "You realize that you have no idea where Gliere's room is. You go upstairs. All the doors are close; none have names on them. One of these might be Gliere's",
       passGoTo: [
         {
           text: 'You decide to try a random door',
@@ -567,7 +567,7 @@ const Entries = {
         }
       },
       {
-        text: 'You decide to escape',
+        text: 'Go to any Arkham location',
         location: 'Arkham',
         advance: {
           amount: 1,
@@ -577,6 +577,48 @@ const Entries = {
     ],
     telephone: false,
     previous: [113]
+  }),
+  28: () => ({
+    type: 'NestedSkillCheckEntry',
+    locationName: null,
+    paragraph: `The door is locked.`,
+    skillCheck: {
+      skill: ['Mechanical Repair', 'STR * 4'],
+      passText: '',
+      passGoTo: [
+        {
+          text: 'You try to pick the lock',
+          location: 7,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        }
+      ],
+      failText: ``,
+      failGoTo: [
+        {
+          text: 'Maybe you should go somewhere else',
+          location: 'Arkham',
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        }
+      ]
+    },
+    goTo: [
+      {
+        text: 'Try the window',
+        location: 7,
+        advance: {
+          amount: 1,
+          type: 'Hour'
+        }
+      }
+    ],
+    telephone: false,
+    previous: [90]
   }),
   38: (currentCharacter, currentDate, currentLocationTable) => ({
     type: 'SpecialActionEntry',
@@ -600,6 +642,106 @@ const Entries = {
     ],
     telephone: false,
     previous: ['Arkham', 'New York', 'Athens', 'Alexandria', 'Bremen']
+  }),
+  45: () => ({
+    type: 'MultipleChoiceEntry',
+    locationName: null,
+    paragraph: `"That's just fancy talk! Professor Gliere specifically instructed that no one disturb his room," She slams the door.`,
+    goTo: [
+      {
+        text: 'Try to sneak in later tonight',
+        location: 90,
+        advance: {
+          amount: 'Night',
+          type: 'Hour'
+        }
+      },
+      {
+        text: 'Go to any Arkham location',
+        location: 'Arkham',
+        advance: {
+          amount: 1,
+          type: 'Hour'
+        }
+      }
+    ],
+    telephone: false,
+    previous: [67, 113]
+  }),
+  51: () => ({
+    type: 'SingleChoiceEntry',
+    locationName: null,
+    paragraph: `"Why the idea!" Mrs. Harding sputters. "I'll count to three," she says, her grip tightening on the shotgun, "and then I'll pull the trigger! One ... two ...." You quickly decide to leave."`,
+    goTo: [
+      {
+        text: `It's time to go somewhere else`,
+        location: 'Arkham',
+        advance: {
+          amount: 1,
+          type: 'Hour'
+        }
+      }
+    ],
+    telephone: false,
+    previous: [2, 7, 28, 52, 141, 150]
+  }),
+  67: () => ({
+    type: 'SkillCheckEntry',
+    locationName: null,
+    paragraph: 'Her eyes are wary. but she is listening. She looks you up and down.',
+    skillCheck: {
+      skill: ['APP * 5'],
+      passText: '',
+      passGoTo: [
+        {
+          text: 'You persuade her',
+          location: 150,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        }
+      ],
+      failText: ``,
+      failGoTo: [
+        {
+          text: 'You do not persuade her',
+          location: 45,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        }
+      ]
+    },
+    goTo: [],
+    telephone: false,
+    previous: [113]
+  }),
+  89: () => ({
+    type: 'MultipleChoiceEntry',
+    locationName: null,
+    paragraph: `Mrs. Harding glares and slams the door in your face.`,
+    goTo: [
+      {
+        text: 'Try to sneak in later tonight',
+        location: 90,
+        advance: {
+          amount: 'Night',
+          type: 'Hour'
+        }
+      },
+      {
+        text: 'Go to any Arkham location',
+        location: 'Arkham',
+        advance: {
+          amount: 1,
+          type: 'Hour'
+        }
+      }
+    ],
+    telephone: false,
+    previous: [113]
   }),
   102: (currentCharacter, currentDate, currentLocationTable, locationsVisited) =>
     new Date(currentDate) > new Date(1931, 8, 8) && locationsVisited.includes(102)
@@ -655,11 +797,53 @@ const Entries = {
           telephone: false,
           previous: []
         },
+  113: () => ({
+    type: 'MultipleChoiceEntry',
+    locationName: 'Harding House',
+    paragraph:
+      "Mrs. Harding greets you amiably. She is uncertain whether she should show you Gliere's room.",
+    goTo: [
+      {
+        text: 'Debate Mrs. Harding',
+        location: 23,
+        advance: {
+          amount: 1,
+          type: 'Hour'
+        }
+      },
+      {
+        text: 'Fast Talk Mrs. Harding',
+        location: 45,
+        advance: {
+          amount: 1,
+          type: 'Hour'
+        }
+      },
+      {
+        text: 'Use Oratory',
+        location: 67,
+        advance: {
+          amount: 1,
+          type: 'Hour'
+        }
+      },
+      {
+        text: 'Try a bribe',
+        location: 89,
+        advance: {
+          amount: 1,
+          type: 'Hour'
+        }
+      }
+    ],
+    telephone: false,
+    previous: ['Arkham']
+  }),
   120: () => ({
     type: 'MultipleChoiceEntry',
     locationName: null,
     paragraph:
-      " The back door is ajar. You enter the small house and a strange, repellent odor assaults your nostrils. Then you hear a car pull away from in front of the house. You look out, but see only a long black sedan disappear around the corner. Everything looks okay until you enter Grunewald's office. It has been totally ransacked. Books and papers are everywhere. You can go to any Arkham location, or you can make a search.",
+      "The back door is ajar. You enter the small house and a strange, repellent odor assaults your nostrils. Then you hear a car pull away from in front of the house. You look out, but see only a long black sedan disappear around the corner. Everything looks okay until you enter Grunewald's office. It has been totally ransacked. Books and papers are everywhere. You can go to any Arkham location, or you can make a search.",
     goTo: [
       {
         text: 'Go to any Arkham location',
@@ -701,8 +885,7 @@ const Entries = {
   165: () => ({
     type: 'SkillCheckEntry',
     locationName: null,
-    paragraph:
-      'Except for detritus normal to an academic life , you find nothing. For another hour of searching and a successful Spot Hidden ,go to - 5- . Or go to any Afkham localion',
+    paragraph: 'Except for detritus normal to an academic life, you find nothing.',
     skillCheck: {
       skill: 'Spot Hidden',
       passText: '',
