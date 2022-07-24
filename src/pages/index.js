@@ -9,6 +9,8 @@ import React, { useEffect, useState } from 'react';
 
 import Characters from '../characters';
 import Entries from '../entries';
+import skillCheck from '../helpers/skillCheck';
+import statCheck from '../helpers/statCheck';
 
 function TheGame() {
   const [currentCharacter] = useState(Characters.Grunewald);
@@ -45,7 +47,6 @@ function TheGame() {
         setCurrentHour(newHour);
       }
     } else {
-      console.log(currentHour);
       if (currentHour >= 22) {
         advanceHours(1);
       } else {
@@ -97,6 +98,52 @@ function TheGame() {
     }
   };
 
+  const handleSkillCheck = (event) => {
+    event.preventDefault();
+
+    // split the event.target.id. the first value is the skill. the second value is the index and assign these to variables
+    const [skill, index] = event.target.id.split('-');
+
+    let result;
+    // if skill includes an asterisk, split it. the word before the asterisk is the skill. the word after the asterisk is the multiplyer.
+    if (skill.includes('*')) {
+      const [skillName, multiplier] = skill.split(' * ');
+
+      result = statCheck(skillName, currentCharacter.stats, multiplier);
+    } else {
+      result = skillCheck(skill, currentCharacter.skills);
+    }
+
+    // roll a d100 and compare it to the specified skill in the currentCharacter stats. if the die roll is greater than the skill, the skill check is a failure. Resolve the correct result based on pass or failure
+
+    // go to the next location based on pass or failure
+    if (result === 'success') {
+      let goTo = currentLocation.skillCheck.passGoTo[index];
+
+      console.log('GO TO: ', goTo);
+
+      if (goTo.advance.type === 'Hour') {
+        advanceHours(goTo.advance.amount);
+      } else if (goTo.advance.type === 'Day') {
+        advanceDays(goTo.advance.amount);
+      }
+
+      setLocationsVisited((current) => [...current, goTo.location]);
+      setCurrentLocation(
+        Entries[goTo.location](
+          currentCharacter,
+          currentDate,
+          currentLocationTable,
+          locationsVisited
+        )
+      );
+    }
+
+    if (result === 'failure') {
+      console.log('Skill check failed');
+    }
+  };
+
   if (!dataIsLoaded) {
     return <Container className="App" />;
   }
@@ -137,6 +184,24 @@ function TheGame() {
           </Typography>
         </>
       )}
+      {currentLocation.type === 'SkillCheckEntry' ? (
+        <>
+          <Grid container spacing={3}>
+            {currentLocation.skillCheck.skill.map((option, index) => (
+              <Grid item xs={12} sm={6} md={4} key={index}>
+                {console.log(option)}
+                <Button
+                  key={index}
+                  variant="contained"
+                  id={`${option}-${index}`}
+                  onClick={handleSkillCheck}>
+                  {option + ' Check'}
+                </Button>
+              </Grid>
+            ))}
+          </Grid>
+        </>
+      ) : null}
       {currentLocation.type === 'LocationTable' ? (
         <>
           <Typography variant="h3" component="h3" gutterBottom>

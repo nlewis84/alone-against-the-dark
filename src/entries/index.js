@@ -59,7 +59,7 @@
  *   locationName: null,
  *   paragraph: ``,
  *   skillCheck: {
- *     skill: "Sneak",
+ *     skill: ["sneak"],
  *     passText: "",
  *     passGoTo: [
  *       {
@@ -258,21 +258,13 @@ const Entries = {
     locationName: null,
     paragraph: `You are in Harding House. You try to move as quietly as possible.`,
     skillCheck: {
-      skill: 'Sneak',
+      skill: ['sneak'],
       passText:
         "You realize that you have no idea where Gliere's room is. You go upstairs. All the doors are close; none have names on them. One of these might be Gliere's",
       passGoTo: [
         {
           text: 'You decide to try a random door',
           location: 52,
-          advance: {
-            amount: 1,
-            type: 'Hour'
-          }
-        },
-        {
-          text: 'Go to any Arkham location.',
-          location: 'Arkham',
           advance: {
             amount: 1,
             type: 'Hour'
@@ -291,7 +283,16 @@ const Entries = {
         }
       ]
     },
-    goTo: [],
+    goTo: [
+      {
+        text: 'Go to any Arkham location.',
+        location: 'Arkham',
+        advance: {
+          amount: 1,
+          type: 'Hour'
+        }
+      }
+    ],
     telephone: false,
     previous: [28, 90]
   }),
@@ -315,7 +316,7 @@ const Entries = {
     locationName: null,
     paragraph: `The man is an Egyptian. His posture seems threatening.`,
     skillCheck: {
-      skill: 'Dodge',
+      skill: ['dodge'],
       passText: 'You get away successfully',
       passGoTo: [
         {
@@ -348,7 +349,7 @@ const Entries = {
     locationName: null,
     paragraph: `Attempt a Luck roll.`,
     skillCheck: {
-      skill: 'Luck',
+      skill: ['luck'],
       passText:
         'Your investigator is armed, he or she gets weapon of choice in hand before the stranger attacks.',
       // Create a new object that contains all the combat encounters
@@ -401,7 +402,7 @@ const Entries = {
     locationName: null,
     paragraph: `The food tasted all right at the time, but now your stomach is churning.Food poisoning! You're really sick!`,
     skillCheck: {
-      skill: 'Treat Poison',
+      skill: ['treatPoison'],
       passText: 'You go on your way',
       passGoTo: [
         {
@@ -467,7 +468,7 @@ const Entries = {
     locationName: null,
     paragraph: `You crouched in the gloomy shadows. Soon you hear slow, shuffling footsteps from many directions. Do you wish you'd run instead? Somehow you count yourself glad that you can't make out the faces of the approaching figures- figures which move as though alive, and yet remind you of the dead! Now you're sure they see you. You begin to panic.`,
     skillCheck: {
-      skill: ['Fast Talk', 'Credit Rating'],
+      skill: ['fastTalk', 'creditRating'],
       passText: '',
       passGoTo: [
         {
@@ -583,7 +584,7 @@ const Entries = {
     locationName: null,
     paragraph: `The door is locked.`,
     skillCheck: {
-      skill: ['Mechanical Repair', 'STR * 4'],
+      skill: ['mechanicalRepair', 'str * 4'],
       passText: '',
       passGoTo: [
         {
@@ -685,12 +686,93 @@ const Entries = {
     telephone: false,
     previous: [2, 7, 28, 52, 141, 150]
   }),
+  52: () => ({
+    type: 'SkillCheckEntry',
+    locationName: null,
+    paragraph: `You'll have to try one of the rooms. Attempt a Sneak roll before each try. If you fail the Sneak, go to the entry and read it, then immediately go to 51. for room A, go to 141; for room B, go to 2; for room C go to 11; for room D ,go to 150.'`,
+    skillCheck: {
+      skill: ['sneak', 'sneak', 'sneak', 'sneak'],
+      passText: '',
+      passGoTo: [
+        {
+          text: 'You sneak into room A',
+          location: 141,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        },
+        {
+          text: 'You sneak into room B',
+          location: 2,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        },
+        {
+          text: 'You sneak into room C',
+          location: 11,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        },
+        {
+          text: 'You sneak into room D',
+          location: 150,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        }
+      ],
+      failText: `You try to sneak into the room`,
+      failGoTo: [
+        {
+          text: 'You stumble as you enter room A. You hear thunderous snores that are quickly silenced, then you hear the padding of footsteps approaching.',
+          location: 51,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        },
+        {
+          text: `The room's silence is shattered by your clumsy footwork. You fumble about for the light switch. You find it, and press it on. Oops! It's Mrs. Harding's room! What a mistake! You see her turn and rise from the bedclothes, her frightened face screaming. As the scream pierces your ears, you hear the boarders begin to stir.`,
+          location: 51,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        },
+        {
+          text: 'You stumble as you enter room C. You hear thunderous snores from the adjoined room that are quickly silenced, then you hear the padding of footsteps approaching.',
+          location: 51,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        },
+        {
+          text: `You turn on a light, just as you clip your toe on the edge of the large desk. You see a room in proper professorial confusion. Scattered about are books of myths and fables, and there are bundles of clippings from various foreign newspapers. Then, you suddenly hear footfalls in the hallway quickly approaching.`,
+          location: 51,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        }
+      ]
+    },
+    goTo: [],
+    telephone: false,
+    previous: [7, 28, 141]
+  }),
   67: () => ({
     type: 'SkillCheckEntry',
     locationName: null,
     paragraph: 'Her eyes are wary. but she is listening. She looks you up and down.',
     skillCheck: {
-      skill: ['APP * 5'],
+      skill: ['app * 5'],
       passText: '',
       passGoTo: [
         {
@@ -742,6 +824,39 @@ const Entries = {
     ],
     telephone: false,
     previous: [113]
+  }),
+  90: () => ({
+    type: 'MultipleChoiceEntry',
+    locationName: null,
+    paragraph: `The boarding house is quiet. You creep onto the porch. To try the window, go to 7; to try the door, go to 28. Or you can leave, and go to any Arkham location.`,
+    goTo: [
+      {
+        text: 'Try the window',
+        location: 7,
+        advance: {
+          amount: 1,
+          type: 'Hour'
+        }
+      },
+      {
+        text: 'Try the door',
+        location: 28,
+        advance: {
+          amount: 1,
+          type: 'Hour'
+        }
+      },
+      {
+        text: 'Go to any Arkham location',
+        location: 'Arkham',
+        advance: {
+          amount: 1,
+          type: 'Hour'
+        }
+      }
+    ],
+    telephone: false,
+    previous: [23, 45, 89]
   }),
   102: (currentCharacter, currentDate, currentLocationTable, locationsVisited) =>
     new Date(currentDate) > new Date(1931, 8, 8) && locationsVisited.includes(102)
@@ -882,12 +997,142 @@ const Entries = {
     telephone: false,
     previous: [102]
   }),
+  150: () => ({
+    type: 'SkillCheckEntry',
+    locationName: null,
+    paragraph: `You cautiously turn on a light and see a room in proper professorial confusion. Scattered about are books of myths and fables, and there are bundles of clippings from various foreign newspapers. For each hour you spend here, you can attempt one roll for one of the following skills. Each skill may be tried once daily. For a successful Astronomy roll, go to 24; for a successful Cryptography roll, go to 29; for a successful Cthulhu Mythos roll, go to 121; for a successful Idea roll, go to 32; for a successful Luck roll, go to 49; for a successful Spot Hidden roll, go to 72. Finished? You may try to Sneak out, no matter what the hour; if you fail, go to 51. If you succeed, go to any Arkham location.`,
+    skillCheck: {
+      skill: ['astronomy', 'cryptography', 'cthulhuMythos', 'idea * 1', 'luck * 1', 'spotHidden'],
+      passText: '',
+      passGoTo: [
+        {
+          text: 'You read the stars',
+          location: 24,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        },
+        {
+          text: 'You crack the code',
+          location: 29,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        },
+        {
+          text: 'You have uncovered something terrible',
+          location: 121,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        },
+        {
+          text: 'You have a new idea',
+          location: 32,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        },
+        {
+          text: 'You have a lucky break',
+          location: 49,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        },
+        {
+          text: 'You have found a secret',
+          location: 72,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        }
+      ],
+      failText: '',
+      failGoTo: [
+        {
+          text: `It doesn't look like anything to you`,
+          location: 150,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        },
+        {
+          text: `It doesn't look like anything to you`,
+          location: 150,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        },
+        {
+          text: `It doesn't look like anything to you`,
+          location: 150,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        },
+        {
+          text: `It doesn't look like anything to you`,
+          location: 150,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        },
+        {
+          text: `It doesn't look like anything to you`,
+          location: 150,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        },
+        {
+          text: `It doesn't look like anything to you`,
+          location: 150,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        }
+      ]
+    },
+    goTo: [
+      {
+        text: 'Sneak out',
+        location: 51,
+        advance: {
+          amount: 1,
+          type: 'Hour'
+        }
+      },
+      {
+        text: 'Go to any Arkham location',
+        location: 'Arkham',
+        advance: {
+          amount: 1,
+          type: 'Hour'
+        }
+      }
+    ],
+    telephone: false,
+    previous: [24, 29, 32, 52, 53, 67, 68, 72, 121, 124, 188, 208, 212, 282]
+  }),
   165: () => ({
     type: 'SkillCheckEntry',
     locationName: null,
     paragraph: 'Except for detritus normal to an academic life, you find nothing.',
     skillCheck: {
-      skill: 'Spot Hidden',
+      skill: ['spotHidden'],
       passText: '',
       passGoTo: [
         {
