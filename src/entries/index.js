@@ -469,7 +469,7 @@ const Entries = {
     paragraph: `You crouched in the gloomy shadows. Soon you hear slow, shuffling footsteps from many directions. Do you wish you'd run instead? Somehow you count yourself glad that you can't make out the faces of the approaching figures- figures which move as though alive, and yet remind you of the dead! Now you're sure they see you. You begin to panic.`,
     skillCheck: {
       skill: ['fastTalk', 'creditRating'],
-      passText: '',
+      passText: 'Perhaps you can impress your way out of this situation',
       passGoTo: [
         {
           text: 'You try to talk your way out of this',
@@ -579,13 +579,46 @@ const Entries = {
     telephone: false,
     previous: [113]
   }),
+  24: () => ({
+    type: 'SkillCheckEntry',
+    locationName: null,
+    paragraph: `A map of the heavens rests on one of the shelves. This constellations map is quite similar to the copy of Ptolemy's found in the M.U. collection. Strangely enough, the star patterns here are slightly twisted or even completely skewed. In some patterns, stars are missing.`,
+    skillCheck: {
+      skill: ['spotHidden'],
+      passText: `There's something else here.`,
+      passGoTo: [
+        {
+          text: 'You see something else',
+          location: 68,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        }
+      ],
+      failText: 'This place is a mess.',
+      failGoTo: [
+        {
+          text: `It doesn't look like anything to you`,
+          location: 150,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        }
+      ]
+    },
+    goTo: [],
+    telephone: false,
+    previous: [72, 150]
+  }),
   28: () => ({
-    type: 'NestedSkillCheckEntry',
+    type: 'SkillCheckEntry',
     locationName: null,
     paragraph: `The door is locked.`,
     skillCheck: {
       skill: ['mechanicalRepair', 'str * 4'],
-      passText: '',
+      passText: 'You deftly jimmy the lock.',
       passGoTo: [
         {
           text: 'You try to pick the lock',
@@ -596,7 +629,7 @@ const Entries = {
           }
         }
       ],
-      failText: ``,
+      failText: `There's a click, but the door remains locked.`,
       failGoTo: [
         {
           text: 'Maybe you should go somewhere else',
@@ -692,7 +725,7 @@ const Entries = {
     paragraph: `You'll have to try one of the rooms. Attempt a Sneak roll before each try. If you fail the Sneak, go to the entry and read it, then immediately go to 51. for room A, go to 141; for room B, go to 2; for room C go to 11; for room D ,go to 150.'`,
     skillCheck: {
       skill: ['sneak', 'sneak', 'sneak', 'sneak'],
-      passText: '',
+      passText: 'You move quietly.',
       passGoTo: [
         {
           text: 'You sneak into room A',
@@ -773,7 +806,7 @@ const Entries = {
     paragraph: 'Her eyes are wary. but she is listening. She looks you up and down.',
     skillCheck: {
       skill: ['app * 5'],
-      passText: '',
+      passText: 'You hope you look the part.',
       passGoTo: [
         {
           text: 'You persuade her',
@@ -784,7 +817,7 @@ const Entries = {
           }
         }
       ],
-      failText: ``,
+      failText: `You seem untrustworthy.`,
       failGoTo: [
         {
           text: 'You do not persuade her',
@@ -799,6 +832,40 @@ const Entries = {
     goTo: [],
     telephone: false,
     previous: [113]
+  }),
+  68: () => ({
+    type: 'SkillCheckEntry',
+    locationName: null,
+    paragraph: `In Breasted's classic, "A History of Egypt", a slip of paper is sticking out. It marks page 170, and on that page phrases are underlined: "internal conflicts," "the fall of the Old Kingdom," "the triumph becomes complete," "the crocodile god." You also notice a word on the slip of paper. In
+    Gliere's handwriting it reads: 'Quattara."`,
+    skillCheck: {
+      skill: ['spotHidden'],
+      passText: 'On the back of paper, you see a strange drawing.',
+      passGoTo: [
+        {
+          text: 'You study the drawing"',
+          location: 188,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        }
+      ],
+      failText: `Maybe there's something else around here"`,
+      failGoTo: [
+        {
+          text: 'You continue looking around the room.',
+          location: 150,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        }
+      ]
+    },
+    goTo: [],
+    telephone: false,
+    previous: [24, 49]
   }),
   89: () => ({
     type: 'MultipleChoiceEntry',
