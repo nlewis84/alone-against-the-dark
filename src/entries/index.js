@@ -1235,6 +1235,31 @@ const Entries = {
     telephone: false,
     previous: [120]
   }),
+  224: () => ({
+    type: 'MultipleChoiceEntry',
+    locationName: null,
+    paragraph: `The darkness is terrifying: You stand undecided for a while.`,
+    goTo: [
+      {
+        text: 'Go West',
+        location: 415,
+        advance: {
+          amount: 1,
+          type: 'Hour'
+        }
+      },
+      {
+        text: 'Go East',
+        location: 442,
+        advance: {
+          amount: 1,
+          type: 'Hour'
+        }
+      }
+    ],
+    telephone: false,
+    previous: [404, 415, 442]
+  }),
   Arkham: () => ({
     type: 'LocationTable',
     locationTableName: 'Arkham',

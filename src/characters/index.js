@@ -524,7 +524,7 @@ const Characters = {
       pow: 17,
       luck: 85,
       siz: 14,
-      san: 50,
+      san: 85,
       edu: 17,
       know: 85,
       schools: 'Miskatonic',
@@ -532,7 +532,7 @@ const Characters = {
       damageModifier: () => rollDice(1, 4),
       magicPoints: 17,
       hitPoints: 13,
-      sanityPoints: 50
+      sanityPoints: 85
     },
     skills: {
       accounting: 10,
