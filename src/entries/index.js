@@ -60,7 +60,8 @@
  *   paragraph: ``,
  *   skillCheck: {
  *     skill: ["sneak"],
- *     passText: "",
+ *     passText: (result) =>
+        `You pass your Sneak check with a roll of ${result}.`,
  *     passGoTo: [
  *       {
  *         text: "You decide to try a random door",
@@ -271,7 +272,7 @@ const Entries = {
           }
         }
       ],
-      failText: (result) => `You fail your Sneak check with a roll of ${result}`,
+      failText: (result) => `You fail your Sneak check with a roll of ${result}.`,
       failGoTo: [
         {
           text: 'You failed to sneak',
@@ -317,7 +318,8 @@ const Entries = {
     paragraph: `The man is an Egyptian. His posture seems threatening.`,
     skillCheck: {
       skill: ['dodge'],
-      passText: 'You get away successfully',
+      passText: (result) =>
+        `You pass your Dodge check with a roll of ${result}. You get away successfully.`,
       passGoTo: [
         {
           text: 'Back to next ship activity',
@@ -328,7 +330,7 @@ const Entries = {
           }
         }
       ],
-      failText: ``,
+      failText: (result) => `You fail your Dodge check with a roll of ${result}.`,
       failGoTo: [
         {
           text: 'You failed to dodge',
@@ -350,9 +352,9 @@ const Entries = {
     paragraph: `Attempt a Luck roll.`,
     skillCheck: {
       skill: ['luck'],
-      passText:
-        'Your investigator is armed, he or she gets weapon of choice in hand before the stranger attacks.',
-      // Create a new object that contains all the combat encounters
+      passText: (result) =>
+        `You pass your Luck check with a roll of ${result}. Your investigator is armed, he or she gets weapon of choice in hand before the stranger attacks.`,
+      // TODO: Create a new object that contains all the combat encounters
       combat: 'Steward',
       passGoTo: [
         {
@@ -364,10 +366,12 @@ const Entries = {
           }
         }
       ],
-      failText: ``,
+      failText: (result) =>
+        `You fail your Luck check with a roll of ${result}. You couldn't escape or kill the steward.`,
       failGoTo: [
         {
           text: "You couldn't escape or kill the steward",
+          // TODO: Build out THE END logic
           location: 'TheEnd',
           advance: {
             amount: 1,
@@ -403,7 +407,8 @@ const Entries = {
     paragraph: `The food tasted all right at the time, but now your stomach is churning.Food poisoning! You're really sick!`,
     skillCheck: {
       skill: ['treatPoison'],
-      passText: 'You go on your way',
+      passText: (result) =>
+        `You pass your Treat Poison check with a roll of ${result}. You go on your way.`,
       passGoTo: [
         {
           text: "It's time to head somewhere else",
@@ -414,7 +419,8 @@ const Entries = {
           }
         }
       ],
-      failText: `You spend three hours recovering, losing one Hit Point and one Magic Point`,
+      failText: (result) =>
+        `You fail your Treat Poison check with a roll of ${result}. You spend three hours recovering, losing one Hit Point and one Magic Point.`,
       failGoTo: [
         {
           text: 'You should head somewhere else',
@@ -469,7 +475,8 @@ const Entries = {
     paragraph: `You crouched in the gloomy shadows. Soon you hear slow, shuffling footsteps from many directions. Do you wish you'd run instead? Somehow you count yourself glad that you can't make out the faces of the approaching figures- figures which move as though alive, and yet remind you of the dead! Now you're sure they see you. You begin to panic.`,
     skillCheck: {
       skill: ['fastTalk', 'creditRating'],
-      passText: 'Perhaps you can impress your way out of this situation',
+      passText: (result) =>
+        `You pass your check with a roll of ${result}. Perhaps you can impress your way out of this situation.`,
       passGoTo: [
         {
           text: 'You try to talk your way out of this',
@@ -478,10 +485,26 @@ const Entries = {
             amount: 1,
             type: 'Hour'
           }
+        },
+        {
+          text: 'Your credit rating speaks for itself',
+          location: 31,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
         }
       ],
-      failText: ``,
+      failText: (result) => `You fail your check with a roll of ${result}.`,
       failGoTo: [
+        {
+          text: 'You try to talk your way out of this',
+          location: 31,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        },
         {
           text: 'You try to talk your way out of this',
           location: 31,
@@ -585,7 +608,8 @@ const Entries = {
     paragraph: `A map of the heavens rests on one of the shelves. This constellations map is quite similar to the copy of Ptolemy's found in the M.U. collection. Strangely enough, the star patterns here are slightly twisted or even completely skewed. In some patterns, stars are missing.`,
     skillCheck: {
       skill: ['spotHidden'],
-      passText: `There's something else here.`,
+      passText: (result) =>
+        `You pass your Spot Hidden check with a roll of ${result}. There's something else here.`,
       passGoTo: [
         {
           text: 'You see something else',
@@ -596,7 +620,8 @@ const Entries = {
           }
         }
       ],
-      failText: 'This place is a mess.',
+      failText: (result) =>
+        `You fail your Spot Hidden check with a roll of ${result}. This place is a mess.`,
       failGoTo: [
         {
           text: `It doesn't look like anything to you`,
@@ -618,7 +643,8 @@ const Entries = {
     paragraph: `The door is locked.`,
     skillCheck: {
       skill: ['mechanicalRepair', 'str * 4'],
-      passText: 'You deftly jimmy the lock.',
+      passText: (result) =>
+        `You pass your check with a roll of ${result}. You deftly jimmy the lock.`,
       passGoTo: [
         {
           text: 'You try to pick the lock',
@@ -627,10 +653,27 @@ const Entries = {
             amount: 1,
             type: 'Hour'
           }
+        },
+        {
+          text: 'You try to smash the lock',
+          location: 7,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
         }
       ],
-      failText: `There's a click, but the door remains locked.`,
+      failText: (result) =>
+        `You fail your check with a roll of ${result}. There's a click, but the door remains locked.`,
       failGoTo: [
+        {
+          text: 'Maybe you should go somewhere else',
+          location: 'Arkham',
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        },
         {
           text: 'Maybe you should go somewhere else',
           location: 'Arkham',
@@ -725,7 +768,7 @@ const Entries = {
     paragraph: `You'll have to try one of the rooms. Attempt a Sneak roll before each try. If you fail the Sneak, go to the entry and read it, then immediately go to 51. for room A, go to 141; for room B, go to 2; for room C go to 11; for room D ,go to 150.'`,
     skillCheck: {
       skill: ['sneak', 'sneak', 'sneak', 'sneak'],
-      passText: 'You move quietly.',
+      passText: (result) => `You pass your Sneak check with a roll of ${result}. You move quietly.`,
       passGoTo: [
         {
           text: 'You sneak into room A',
@@ -760,7 +803,8 @@ const Entries = {
           }
         }
       ],
-      failText: `You try to sneak into the room`,
+      failText: (result) =>
+        `You fail your Sneak check with a roll of ${result}. You try to sneak into the room.`,
       failGoTo: [
         {
           text: 'You stumble as you enter room A. You hear thunderous snores that are quickly silenced, then you hear the padding of footsteps approaching.',
@@ -806,7 +850,8 @@ const Entries = {
     paragraph: 'Her eyes are wary. but she is listening. She looks you up and down.',
     skillCheck: {
       skill: ['app * 5'],
-      passText: 'You hope you look the part.',
+      passText: (result) =>
+        `You pass your Appearance check with a roll of ${result}. You hope you look the part.`,
       passGoTo: [
         {
           text: 'You persuade her',
@@ -817,7 +862,8 @@ const Entries = {
           }
         }
       ],
-      failText: `You seem untrustworthy.`,
+      failText: (result) =>
+        `You fail your Appearance check with a roll of ${result}. You seem untrustworthy.`,
       failGoTo: [
         {
           text: 'You do not persuade her',
@@ -840,7 +886,8 @@ const Entries = {
     Gliere's handwriting it reads: 'Quattara."`,
     skillCheck: {
       skill: ['spotHidden'],
-      passText: 'On the back of paper, you see a strange drawing.',
+      passText: (result) =>
+        `You pass your Spot Hidden check with a roll of ${result}. On the back of paper, you see a strange drawing.`,
       passGoTo: [
         {
           text: 'You study the drawing"',
@@ -851,7 +898,8 @@ const Entries = {
           }
         }
       ],
-      failText: `Maybe there's something else around here"`,
+      failText: (result) =>
+        `You fail your Spot Hidden check with a roll of ${result}. Maybe there's something else around here.`,
       failGoTo: [
         {
           text: 'You continue looking around the room.',
@@ -1070,7 +1118,7 @@ const Entries = {
     paragraph: `You cautiously turn on a light and see a room in proper professorial confusion. Scattered about are books of myths and fables, and there are bundles of clippings from various foreign newspapers. For each hour you spend here, you can attempt one roll for one of the following skills. Each skill may be tried once daily. For a successful Astronomy roll, go to 24; for a successful Cryptography roll, go to 29; for a successful Cthulhu Mythos roll, go to 121; for a successful Idea roll, go to 32; for a successful Luck roll, go to 49; for a successful Spot Hidden roll, go to 72. Finished? You may try to Sneak out, no matter what the hour; if you fail, go to 51. If you succeed, go to any Arkham location.`,
     skillCheck: {
       skill: ['astronomy', 'cryptography', 'cthulhuMythos', 'idea * 1', 'luck * 1', 'spotHidden'],
-      passText: '',
+      passText: (result) => `You pass your check with a roll of ${result}.`,
       passGoTo: [
         {
           text: 'You read the stars',
@@ -1121,7 +1169,7 @@ const Entries = {
           }
         }
       ],
-      failText: '',
+      failText: (result) => `You fail your check with a roll of ${result}.`,
       failGoTo: [
         {
           text: `It doesn't look like anything to you`,
@@ -1200,7 +1248,7 @@ const Entries = {
     paragraph: 'Except for detritus normal to an academic life, you find nothing.',
     skillCheck: {
       skill: ['spotHidden'],
-      passText: '',
+      passText: (result) => `You pass your Spot Hidden check with a roll of ${result}.`,
       passGoTo: [
         {
           text: 'You spend more time searching',
@@ -1209,17 +1257,10 @@ const Entries = {
             amount: 1,
             type: 'Hour'
           }
-        },
-        {
-          text: 'Go to any Arkham location.',
-          location: 'Arkham',
-          advance: {
-            amount: 1,
-            type: 'Hour'
-          }
         }
       ],
-      failText: `You failed to find anything useful`,
+      failText: (result) =>
+        `You fail your Spot Hidden check with a roll of ${result}. You failed to find anything useful.`,
       failGoTo: [
         {
           text: 'Go to any Arkham location.',
@@ -1231,7 +1272,16 @@ const Entries = {
         }
       ]
     },
-    goTo: [],
+    goTo: [
+      {
+        text: 'Go to any Arkham location.',
+        location: 'Arkham',
+        advance: {
+          amount: 1,
+          type: 'Hour'
+        }
+      }
+    ],
     telephone: false,
     previous: [120]
   }),
