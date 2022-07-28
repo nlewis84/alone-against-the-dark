@@ -123,7 +123,7 @@ function TheGame() {
     } else {
       result = skillCheck(skill, currentCharacter.skills);
     }
-
+    console.log(result);
     // go to the next location based on pass or failure
     if (result.success) {
       let goTo = currentSkillCheck.passGoTo[index];
@@ -242,6 +242,11 @@ function TheGame() {
           <Typography variant="h3" component="h3" gutterBottom>
             {currentLocation.locationTableName + ' Locations'}
           </Typography>
+          {skillCheckSuccessText || skillCheckFailureText ? (
+            <Typography component="p" gutterBottom>
+              {skillCheckSuccessText ? skillCheckSuccessText : skillCheckFailureText}
+            </Typography>
+          ) : null}
           <Grid container spacing={3}>
             {currentLocation.locations.map((item, indexOfLocation) => (
               <Grid item xs={12} sm={6} md={4} key={indexOfLocation}>

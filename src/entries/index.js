@@ -643,8 +643,7 @@ const Entries = {
     paragraph: `The door is locked.`,
     skillCheck: {
       skill: ['mechanicalRepair', 'str * 4'],
-      passText: (result) =>
-        `You pass your check with a roll of ${result}. You deftly jimmy the lock.`,
+      passText: (result) => `You pass your check with a roll of ${result}.`,
       passGoTo: [
         {
           text: 'You try to pick the lock',
@@ -664,7 +663,7 @@ const Entries = {
         }
       ],
       failText: (result) =>
-        `You fail your check with a roll of ${result}. There's a click, but the door remains locked.`,
+        `You fail your check with a roll of ${result}. You hear a click, but the door remains locked.`,
       failGoTo: [
         {
           text: 'Maybe you should go somewhere else',
