@@ -5,9 +5,9 @@ function skillCheck(skill, currentCharacterSkills) {
   const dieRoll = Math.floor(Math.random() * 100) + 1;
   console.log(dieRoll, currentCharacterSkills[skill], dieRoll <= currentCharacterSkills[skill]);
   if (dieRoll <= currentCharacterSkills[skill]) {
-    return 'success';
+    return { success: true, roll: dieRoll };
   } else {
-    return 'failure';
+    return { success: false, roll: dieRoll };
   }
 }
 

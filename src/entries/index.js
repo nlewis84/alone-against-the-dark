@@ -259,8 +259,8 @@ const Entries = {
     paragraph: `You are in Harding House. You try to move as quietly as possible.`,
     skillCheck: {
       skill: ['sneak'],
-      passText:
-        "You realize that you have no idea where Gliere's room is. You go upstairs. All the doors are close; none have names on them. One of these might be Gliere's",
+      passText: (result) =>
+        `You pass your Sneak check with a roll of ${result}. You realize that you have no idea where Gliere's room is. You go upstairs. All the doors are close; none have names on them. One of these might be Gliere's.`,
       passGoTo: [
         {
           text: 'You decide to try a random door',
@@ -271,7 +271,7 @@ const Entries = {
           }
         }
       ],
-      failText: ``,
+      failText: (result) => `You fail your Sneak check with a roll of ${result}`,
       failGoTo: [
         {
           text: 'You failed to sneak',
@@ -383,7 +383,7 @@ const Entries = {
   11: () => ({
     type: 'SingleChoiceEntry',
     locationName: null,
-    paragraph: `This room is actually just connectd to the adjacent room.`,
+    paragraph: `This room is actually just connected to the adjacent room.`,
     goTo: [
       {
         text: 'You hear something',

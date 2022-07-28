@@ -21,6 +21,8 @@ function TheGame() {
   const [currentLocation, setCurrentLocation] = useState(
     Entries[13](currentCharacter, currentDate, currentLocationTable, locationsVisited)
   );
+  const [skillCheckSuccessText, setSkillCheckSuccessText] = useState('');
+  const [skillCheckFailureText, setSkillCheckFailureText] = useState('');
   const [dataIsLoaded, setDataIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -57,6 +59,9 @@ function TheGame() {
 
   const handleClick = (event) => {
     event.preventDefault();
+
+    setSkillCheckSuccessText('');
+    setSkillCheckFailureText('');
 
     if (currentLocation.type === 'LocationTable') {
       let goTo = currentLocation.locations[event.target.id].goTo[0];
@@ -101,8 +106,13 @@ function TheGame() {
   const handleSkillCheck = (event) => {
     event.preventDefault();
 
+    setSkillCheckSuccessText('');
+    setSkillCheckFailureText('');
+
     // split the event.target.id. the first value is the skill. the second value is the index and assign these to variables
     const [skill, index] = event.target.id.split('-');
+
+    const currentSkillCheck = currentLocation.skillCheck;
 
     let result;
     // if skill includes an asterisk, split it. the word before the asterisk is the skill. the word after the asterisk is the multiplyer.
@@ -114,11 +124,10 @@ function TheGame() {
       result = skillCheck(skill, currentCharacter.skills);
     }
 
-    // roll a d100 and compare it to the specified skill in the currentCharacter stats. if the die roll is greater than the skill, the skill check is a failure. Resolve the correct result based on pass or failure
-
     // go to the next location based on pass or failure
-    if (result === 'success') {
-      let goTo = currentLocation.skillCheck.passGoTo[index];
+    if (result.success) {
+      let goTo = currentSkillCheck.passGoTo[index];
+      let passText = (num) => currentSkillCheck.passText(num);
 
       console.log('GO TO: ', goTo);
 
@@ -128,6 +137,7 @@ function TheGame() {
         advanceDays(goTo.advance.amount);
       }
 
+      setSkillCheckSuccessText(passText(result.roll));
       setLocationsVisited((current) => [...current, goTo.location]);
       setCurrentLocation(
         Entries[goTo.location](
@@ -139,8 +149,28 @@ function TheGame() {
       );
     }
 
-    if (result === 'failure') {
-      console.log('Skill check failed');
+    if (!result.success) {
+      let goTo = currentSkillCheck.failGoTo[index];
+      let failText = (num) => currentSkillCheck.failText(num);
+
+      console.log('GO TO: ', goTo);
+
+      if (goTo.advance.type === 'Hour') {
+        advanceHours(goTo.advance.amount);
+      } else if (goTo.advance.type === 'Day') {
+        advanceDays(goTo.advance.amount);
+      }
+
+      setSkillCheckFailureText(failText(result.roll));
+      setLocationsVisited((current) => [...current, goTo.location]);
+      setCurrentLocation(
+        Entries[goTo.location](
+          currentCharacter,
+          currentDate,
+          currentLocationTable,
+          locationsVisited
+        )
+      );
     }
   };
 
@@ -179,6 +209,11 @@ function TheGame() {
           <Typography variant="h3" component="h3" gutterBottom>
             {'Current Location'}
           </Typography>
+          {skillCheckSuccessText || skillCheckFailureText ? (
+            <Typography component="p" gutterBottom>
+              {skillCheckSuccessText ? skillCheckSuccessText : skillCheckFailureText}
+            </Typography>
+          ) : null}
           <Typography component="p" gutterBottom>
             {currentLocation.paragraph}
           </Typography>
