@@ -127,7 +127,7 @@ function TheGame() {
     // go to the next location based on pass or failure
     if (result.success) {
       let goTo = currentSkillCheck.passGoTo[index];
-      let passText = (num) => currentSkillCheck.passText(num);
+      let passText = (num) => `${currentSkillCheck.passText(num)} ${goTo.text}`;
 
       console.log('GO TO: ', goTo);
 
@@ -151,7 +151,7 @@ function TheGame() {
 
     if (!result.success) {
       let goTo = currentSkillCheck.failGoTo[index];
-      let failText = (num) => currentSkillCheck.failText(num);
+      let failText = (num) => `${currentSkillCheck.failText(num)} ${goTo.text}`;
 
       console.log('GO TO: ', goTo);
 
