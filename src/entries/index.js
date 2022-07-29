@@ -692,6 +692,72 @@ const Entries = {
     telephone: false,
     previous: [90]
   }),
+  29: () => ({
+    type: 'SkillCheckEntry',
+    locationName: null,
+    paragraph: `You see strange, bird-like markings and some scribbled words in the Professor's familiar hand. Three of the words seem paired with the symbols - old, heavens, cold.`,
+    skillCheck: {
+      skill: ['idea * 1'],
+      passText: (result) => `You pass your check with a roll of ${result}.`,
+      passGoTo: [
+        {
+          text: 'You recognize this language.',
+          location: 124,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        }
+      ],
+      failText: (result) => `You fail your check with a roll of ${result}.`,
+      failGoTo: [
+        {
+          text: "You don't recognize this language. Maybe there is more to find in this room.",
+          location: 150,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        }
+      ],
+      goTo: [],
+      telephone: false,
+      previous: [150]
+    }
+  }),
+  32: () => ({
+    type: 'SkillCheckEntry',
+    locationName: null,
+    paragraph: `In rifling through Gliere's notes and letters, you find a portion of manuscript: "The Great Upheaval Myths Correlated with Climatic Change," by T. Gliere. Skimming, you see a bizarre collection of tales mentioning nearly every rumored land, from Atlantis to Mu. Many stories you do not recognize at all. Apparently Gliere sought historical and physical evidence for these legends of lands sunken and frozen. He seems to have found common dates for the devastation myths common to nearly every culture. Interesting. If you can make a successful Spot Hidden check go to 53, else go to 150.`,
+    skillCheck: {
+      skill: ['spotHidden'],
+      passText: (result) => `You pass your check with a roll of ${result}.`,
+      passGoTo: [
+        {
+          text: 'There is something stuck between pages near the back of the book.',
+          location: 53,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        }
+      ],
+      failText: (result) => `You fail your check with a roll of ${result}.`,
+      failGoTo: [
+        {
+          text: 'You continue your search.',
+          location: 150,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        }
+      ]
+    },
+    goTo: [],
+    telephone: false,
+    previous: [150]
+  }),
   38: (currentCharacter, currentDate, currentLocationTable) => ({
     type: 'SpecialActionEntry',
     locationName: 'Retail Store',
@@ -739,6 +805,32 @@ const Entries = {
     ],
     telephone: false,
     previous: [67, 113]
+  }),
+  49: () => ({
+    type: 'MultipleChoiceEntry',
+    locationName: null,
+    paragraph: `There's a strange drawing on the desk a book on a nearby shelf has a slip of paper sticking out of it.`,
+    goTo: [
+      {
+        text: 'Get a closer look at the drawing',
+        location: 46,
+        advance: {
+          amount: 1,
+          type: 'Hour'
+        }
+      },
+      {
+        text: 'Try to read the slip of paper',
+        location: 68,
+        advance: {
+          amount: 1,
+
+          type: 'Hour'
+        }
+      }
+    ],
+    telephone: false,
+    previous: [150]
   }),
   51: () => ({
     type: 'SingleChoiceEntry',
@@ -838,6 +930,23 @@ const Entries = {
     telephone: false,
     previous: [7, 28, 141]
   }),
+  53: () => ({
+    type: 'SingleChoiceEntry',
+    locationName: null,
+    paragraph: `You find a letter from a Mr. Velikovsky, postmarked Palestine. The scrawl is difficult, but you can see that the author greets Gliere's work 'with joy.' There is a page about the Vedas and how they confirm something called the 'Polar Reversal.' One portion deals with the 'Era of Fertility on the Frozen Continent.' Velikovsky reports that work on 'Freudian Heroes' - including Ikhenaten - continues.`,
+    goTo: [
+      {
+        text: 'Continue your search',
+        location: 150,
+        advance: {
+          amount: 1,
+          type: 'Hour'
+        }
+      }
+    ],
+    telephone: false,
+    previous: [32]
+  }),
   67: () => ({
     type: 'SkillCheckEntry',
     locationName: null,
@@ -875,7 +984,7 @@ const Entries = {
     type: 'SkillCheckEntry',
     locationName: null,
     paragraph: `In Breasted's classic, "A History of Egypt", a slip of paper is sticking out. It marks page 170, and on that page phrases are underlined: "internal conflicts," "the fall of the Old Kingdom," "the triumph becomes complete," "the crocodile god." You also notice a word on the slip of paper. In
-    Gliere's handwriting it reads: 'Quattara."`,
+    Gliere's handwriting it reads: 'Quattara.'`,
     skillCheck: {
       skill: ['spotHidden'],
       passText: (result) => `You pass your Spot Hidden check with a roll of ${result}.`,
@@ -905,6 +1014,40 @@ const Entries = {
     goTo: [],
     telephone: false,
     previous: [24, 49]
+  }),
+  72: () => ({
+    type: 'SkillCheckEntry',
+    locationName: null,
+    paragraph: `A jumble of papers are piled on a shelf.`,
+    skillCheck: {
+      skill: ['spotHidden'],
+      passText: (result) => `You pass your Spot Hidden check with a roll of ${result}.`,
+      passGoTo: [
+        {
+          text: 'This paper is thicker than the rest.',
+          location: 24,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        }
+      ],
+      failText: (result) =>
+        `You fail your Spot Hidden check with a roll of ${result}. Maybe there's something else around here.`,
+      failGoTo: [
+        {
+          text: 'You continue looking around the room.',
+          location: 150,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        }
+      ]
+    },
+    goTo: [],
+    telephone: false,
+    previous: [150]
   }),
   89: () => ({
     type: 'MultipleChoiceEntry',
@@ -1086,6 +1229,63 @@ const Entries = {
     telephone: false,
     previous: []
   }),
+  121: () => ({
+    type: 'SpecialActionEntry',
+    locationName: null,
+    paragraph: `You see the book "Nameless Cults", in the Golden Goblin Press edition. You thumb through it - vile stuff, you decide. Something about this book alarms and fascinates you. You take it with you. Later, if your curiosity overcomes your common sense, you may read it, at a cost of 2D8 SAN; gaining 9 percentiles to your Cthulhu Mythos. While reading, if you wish to learn the spell Summon Byakhee, roll ID6 for the number of months that takes.`,
+    specialAction: [
+      {
+        text: 'Take the book',
+        action: 'TakeNamelessCults'
+      }
+    ],
+    goTo: [
+      {
+        text: 'Read the book',
+        location: 150,
+        advance: {
+          amount: 1,
+          type: 'Hour'
+        }
+      }
+    ],
+    telephone: false,
+    previous: [150]
+  }),
+  124: () => ({
+    type: 'SkillCheckEntry',
+    locationName: null,
+    paragraph: `They are Egyptian hieroglyphics.`,
+    skillCheck: {
+      skill: ['languageEgHieroglyph'],
+      passText: (result) => `You succeed your Language check with a roll of ${result}.`,
+      passGoTo: [
+        {
+          text: 'You even recognize some words.',
+          location: 212,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        }
+      ],
+      failText: (result) =>
+        `You fail your Language check with a roll of ${result}. Maybe there's something else around here.`,
+      failGoTo: [
+        {
+          text: 'You continue your search.',
+          location: 150,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        }
+      ]
+    },
+    goTo: [],
+    telephone: false,
+    previous: [29]
+  }),
   147: () => ({
     type: 'SingleChoiceEntry',
     locationName: null,
@@ -1106,9 +1306,17 @@ const Entries = {
   150: () => ({
     type: 'SkillCheckEntry',
     locationName: null,
-    paragraph: `You cautiously turn on a light and see a room in proper professorial confusion. Scattered about are books of myths and fables, and there are bundles of clippings from various foreign newspapers. For each hour you spend here, you can attempt one roll for one of the following skills. Each skill may be tried once daily. For a successful Astronomy roll, go to 24; for a successful Cryptography roll, go to 29; for a successful Cthulhu Mythos roll, go to 121; for a successful Idea roll, go to 32; for a successful Luck roll, go to 49; for a successful Spot Hidden roll, go to 72. Finished? You may try to Sneak out, no matter what the hour; if you fail, go to 51. If you succeed, go to any Arkham location.`,
+    paragraph: `You cautiously turn on a light and see a room in proper professorial confusion. Scattered about are books of myths and fables, and there are bundles of clippings from various foreign newspapers. For each hour you spend here, you can attempt one roll for one of the following skills. Each skill may be tried once daily. Finished looking around? You may try to Sneak out, no matter what the hour; if you fail, go to 51. If you succeed, go to any Arkham location.`,
     skillCheck: {
-      skill: ['astronomy', 'cryptography', 'cthulhuMythos', 'idea * 1', 'luck * 1', 'spotHidden'],
+      skill: [
+        'astronomy',
+        'cryptography',
+        'cthulhuMythos',
+        'idea * 1',
+        'luck * 1',
+        'spotHidden',
+        'sneak'
+      ],
       passText: (result) => `You pass your check with a roll of ${result}.`,
       passGoTo: [
         {
@@ -1154,6 +1362,14 @@ const Entries = {
         {
           text: 'You have found a secret.',
           location: 72,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        },
+        {
+          text: 'You sneak out of the house and back to town.',
+          location: 'Arkham',
           advance: {
             amount: 1,
             type: 'Hour'
@@ -1209,27 +1425,18 @@ const Entries = {
             amount: 1,
             type: 'Hour'
           }
+        },
+        {
+          text: 'Your footsteps are not as quiet as you thought.',
+          location: 51,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
         }
       ]
     },
-    goTo: [
-      {
-        text: 'Try to Sneak out',
-        location: 51,
-        advance: {
-          amount: 1,
-          type: 'Hour'
-        }
-      },
-      {
-        text: 'Go to any Arkham location',
-        location: 'Arkham',
-        advance: {
-          amount: 1,
-          type: 'Hour'
-        }
-      }
-    ],
+    goTo: [],
     telephone: false,
     previous: [24, 29, 32, 52, 53, 67, 68, 72, 121, 124, 188, 208, 212, 282]
   }),
@@ -1276,6 +1483,57 @@ const Entries = {
     telephone: false,
     previous: [120]
   }),
+  208: () => ({
+    type: 'SingleChoiceEntry',
+    locationName: null,
+    paragraph: 'The heiroglyph looks like a shoggoth!',
+    goTo: [
+      {
+        text: 'Continue your search',
+        location: 150,
+        advance: {
+          amount: 1,
+          type: 'Hour'
+        }
+      }
+    ],
+    telephone: false,
+    previous: [165]
+  }),
+  212: () => ({
+    type: 'SkillCheckEntry',
+    locationName: null,
+    paragraph: `You decipher four words from the hieroglyphics: "ones," "spin," "city," and "Top." The rest baffle you.`,
+    skillCheck: {
+      skill: ['egyptology'],
+      passText: (result) => `You pass your Egyptology check with a roll of ${result}.`,
+      passGoTo: [
+        {
+          text: 'You spend more time deciphering the hieroglyphics.',
+          location: 282,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        }
+      ],
+      failText: (result) =>
+        `You fail your Egyptology check with a roll of ${result}. You failed to decipher the hieroglyphics.`,
+      failGoTo: [
+        {
+          text: 'You continue your search.',
+          location: 150,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        }
+      ]
+    },
+    goTo: [],
+    telephone: false,
+    previous: [124]
+  }),
   224: () => ({
     type: 'MultipleChoiceEntry',
     locationName: null,
@@ -1300,6 +1558,40 @@ const Entries = {
     ],
     telephone: false,
     previous: [404, 415, 442]
+  }),
+  282: () => ({
+    type: 'SkillCheckEntry',
+    locationName: null,
+    paragraph: `You understand four more hieroglyphs: "Akhenaten ," "tomb," "sunrise ," and "secret." Make a successful Cthulhu Mythos roll and go
+    to - 208- ; fail and go to - 150- .`,
+    skillCheck: {
+      skill: ['cthulhuMythos'],
+      passText: (result) => `You pass your Cthulhu Mythos check with a roll of ${result}.`,
+      passGoTo: [
+        {
+          text: `You have seen this hieroglyph before in an ancient, arcane tome!`,
+          location: 208,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        }
+      ],
+      failText: (result) => `You fail your Cthulhu Mythos check with a roll of ${result}.`,
+      failGoTo: [
+        {
+          text: 'You continue your search around the room.',
+          location: 150,
+          advance: {
+            amount: 1,
+            type: 'Hour'
+          }
+        }
+      ]
+    },
+    goTo: [],
+    telephone: false,
+    previous: [212]
   }),
   Arkham: () => ({
     type: 'LocationTable',
@@ -1466,4 +1758,5 @@ const Entries = {
   })
 };
 
+console.log(Object.keys(Entries));
 export default Entries;
