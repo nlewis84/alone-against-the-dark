@@ -221,7 +221,7 @@ function TheGame() {
       )}
       {currentLocation.type === 'SkillCheckEntry' ? (
         <>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} sx={{ marginTop: 0 }}>
             {currentLocation.skillCheck.skill.map((option, index) => (
               <Grid item xs={12} sm={6} md={4} key={index}>
                 {console.log(option)}
@@ -266,7 +266,7 @@ function TheGame() {
         </>
       ) : (
         <>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} sx={{ marginTop: 0 }}>
             {currentLocation.goTo.map((option, index) => (
               <Grid item xs={12} sm={6} md={4} key={index}>
                 <Button key={index} variant="contained" id={index} onClick={handleClick}>
