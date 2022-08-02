@@ -23,6 +23,9 @@ function TheGame() {
   );
   const [skillCheckSuccessText, setSkillCheckSuccessText] = useState('');
   const [skillCheckFailureText, setSkillCheckFailureText] = useState('');
+  const [skillCheckMemory, setSkillCheckMemory] = useState([
+    { currentLocation: 13, index: '0', currentDate }
+  ]);
   const [dataIsLoaded, setDataIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -129,7 +132,10 @@ function TheGame() {
       let goTo = currentSkillCheck.passGoTo[index];
       let passText = (num) => `${currentSkillCheck.passText(num)} ${goTo.text}`;
 
-      console.log('GO TO: ', goTo);
+      setSkillCheckMemory((current) => [
+        ...current,
+        { currentLocation: locationsVisited[locationsVisited.length - 1], index, currentDate }
+      ]);
 
       if (goTo.advance.type === 'Hour') {
         advanceHours(goTo.advance.amount);
@@ -153,7 +159,10 @@ function TheGame() {
       let goTo = currentSkillCheck.failGoTo[index];
       let failText = (num) => `${currentSkillCheck.failText(num)} ${goTo.text}`;
 
-      console.log('GO TO: ', goTo);
+      setSkillCheckMemory((current) => [
+        ...current,
+        { currentLocation: locationsVisited[locationsVisited.length - 1], index, currentDate }
+      ]);
 
       if (goTo.advance.type === 'Hour') {
         advanceHours(goTo.advance.amount);
@@ -222,18 +231,45 @@ function TheGame() {
       {currentLocation.type === 'SkillCheckEntry' ? (
         <>
           <Grid container spacing={3} sx={{ marginTop: 0 }}>
-            {currentLocation.skillCheck.skill.map((option, index) => (
-              <Grid item xs={12} sm={6} md={4} key={index}>
-                {console.log(option)}
-                <Button
-                  key={index}
-                  variant="contained"
-                  id={`${option}-${index}`}
-                  onClick={handleSkillCheck}>
-                  {option + ' Check'}
-                </Button>
-              </Grid>
-            ))}
+            {currentLocation.skillCheck.skill.map((option, index) => {
+              return (
+                <Grid item xs={12} sm={6} md={4} key={index}>
+                  <Button
+                    key={index}
+                    variant="contained"
+                    id={`${option}-${index}`}
+                    onClick={handleSkillCheck}>
+                    {option + ' Check'}
+                  </Button>
+                </Grid>
+              );
+            })}
+          </Grid>
+        </>
+      ) : null}
+      {currentLocation.type === 'LimitedSkillCheckEntry' ? (
+        <>
+          <Grid container spacing={3} sx={{ marginTop: 0 }}>
+            {currentLocation.skillCheck.skill.map((option, index) => {
+              // Removes Daily checks that have already been performed once today
+              return skillCheckMemory.filter(
+                (i) =>
+                  Entries[i.currentLocation] ===
+                    Entries[locationsVisited[locationsVisited.length - 1]] &&
+                  i.currentDate === currentDate &&
+                  i.index === index.toString()
+              ).length !== 0 && currentLocation.skillCheck.limitations[index] === 'Daily' ? null : (
+                <Grid item xs={12} sm={6} md={4} key={index}>
+                  <Button
+                    key={index}
+                    variant="contained"
+                    id={`${option}-${index}`}
+                    onClick={handleSkillCheck}>
+                    {option + ' Check'}
+                  </Button>
+                </Grid>
+              );
+            })}
           </Grid>
         </>
       ) : null}

@@ -8,6 +8,7 @@
  * 4. SpecialActionEntry
  * 5. PreviousLocationEntry
  * 6. TelephoneEntry - could be like any other entry, but will also have a telephoneParagraph
+ * 7. LimitedSkillCheckEntry - like a SkillCheckEntry, but has a limited attribute
  *
  * SingleChoiceEntry:
  * {
@@ -146,6 +147,52 @@
  *   telephone: true,
  *   previous: [166, 177],
  * }
+ *
+ * LimitedSkillCheckEntry:
+ * {
+ *   type: "SkillCheckEntry",
+ *   locationName: null,
+ *   paragraph: ``,
+ *   skillCheck: {
+ *     skill: ["sneak"],
+ *     limitations: ['Daily', 'Daily', 'Daily', 'Daily', 'Daily', 'Daily', 'Always'],
+ *     passText: (result) =>
+        `You pass your Sneak check with a roll of ${result}.`,
+ *     passGoTo: [
+ *       {
+ *         text: "You decide to try a random door",
+ *         location: 52,
+ *         advance: {
+ *           amount: 1,
+ *           type: "Hour"
+ *         }
+ *       },
+ *       {
+ *         text: "Go to any Arkham location.",
+ *         location: "Arkham",
+ *         advance: {
+ *           amount: 1,
+ *           type: "Hour"
+ *         }
+ *       }
+ *     ],
+ *     failText: ``,
+ *     failGoTo: [
+ *       {
+ *         text: "You failed to sneak",
+ *         location: 10,
+ *         advance: {
+ *           amount: 1,
+ *           type: "Hour"
+ *         }
+ *       }
+ *     ]
+ *   },
+ *   goTo: [],
+ *   telephone: false,
+ *   previous: [1],
+ * }
+ *
  *
  * @format
  */
@@ -1304,9 +1351,9 @@ const Entries = {
     previous: [102]
   }),
   150: () => ({
-    type: 'SkillCheckEntry',
+    type: 'LimitedSkillCheckEntry',
     locationName: null,
-    paragraph: `You cautiously turn on a light and see a room in proper professorial confusion. Scattered about are books of myths and fables, and there are bundles of clippings from various foreign newspapers. For each hour you spend here, you can attempt one roll for one of the following skills. Each skill may be tried once daily. Finished looking around? You may try to Sneak out, no matter what the hour; if you fail, go to 51. If you succeed, go to any Arkham location.`,
+    paragraph: `You cautiously turn on a light and see a room in proper professorial confusion. Scattered about are books of myths and fables, and there are bundles of clippings from various foreign newspapers. For each hour you spend here, you can attempt one roll for one of the following skills. Each skill may be tried once daily. Finished looking around? You may try to Sneak out, no matter what the hour.`,
     skillCheck: {
       skill: [
         'astronomy',
@@ -1317,6 +1364,8 @@ const Entries = {
         'spotHidden',
         'sneak'
       ],
+      // TODO: Build out limitations for skill checks
+      limitations: ['Daily', 'Daily', 'Daily', 'Daily', 'Daily', 'Daily', 'Always'],
       passText: (result) => `You pass your check with a roll of ${result}.`,
       passGoTo: [
         {
